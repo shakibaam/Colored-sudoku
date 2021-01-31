@@ -840,7 +840,7 @@ public class soduku {
             }
         }
 
-        board.printCombineDomain();
+//        board.printCombineDomain();
 
 
         /*
@@ -860,7 +860,9 @@ public class soduku {
                      */
                     for (int k = 0; k < n; k++) {
                         if (j != k) {
-                            board.cellMap[i][j].removeFromNumbersDomain(board.cellMap[i][k].num);
+                            if (board.cellMap[i][j].numbersDomain.contains(board.cellMap[i][k].num)){
+                               board.cellMap[i][j].removeFromNumbersDomain(board.cellMap[i][k].num);
+                            }
                         }
                     }
                      /*
@@ -869,7 +871,9 @@ public class soduku {
 
                     for (int k = 0; k < n; k++) {
                         if (k != i) {
-                            board.cellMap[i][j].removeFromNumbersDomain(board.cellMap[k][j].num);
+                            if (board.cellMap[i][j].numbersDomain.contains(board.cellMap[k][j].num)){
+                              board.cellMap[i][j].removeFromNumbersDomain(board.cellMap[k][j].num);
+                            }
                         }
                     }
 
@@ -964,8 +968,10 @@ public class soduku {
                             }
 
                         } else if (board.cellMap[i - 1][j].color == '#') {
-                            int index= board.cellMap[i-1][j].colorsDomain.indexOf(board.cellMap[i][j].color);
-                            board.cellMap[i-1][j].colorsDomain.remove(index);
+                            if (board.cellMap[i-1][j].colorsDomain.contains(board.cellMap[i][j].color)){
+                               int index= board.cellMap[i-1][j].colorsDomain.indexOf(board.cellMap[i][j].color);
+                               board.cellMap[i-1][j].colorsDomain.remove(index);
+                            }
                             if (board.cellMap[i-1][j].colorsDomain.size()==0){
                                 System.out.println("this Problem Has No Solution..");
                                 return;
@@ -1006,7 +1012,7 @@ public class soduku {
                         }
                     }
 
-                    if (i+1<board.size){
+                    if (i+1<board.size) {
                         if (board.cellMap[i + 1][j].color != '#') {
                             if (board.cellMap[i + 1][j].color == board.cellMap[i][j].color) {
                                 System.out.println("this Problem Has No Solution..");
@@ -1020,33 +1026,33 @@ public class soduku {
                                             return;
                                         }
                                     }
-                                } else if (board.cellMap[i + 1][j].num == 0 && board.cellMap[i][j].num!=0) {
+                                } else if (board.cellMap[i + 1][j].num == 0 && board.cellMap[i][j].num != 0) {
                                     if (Colors.indexOf(board.cellMap[i + 1][j].color) <= Colors.indexOf(board.cellMap[i][j].color)) {
-                                        for (int k = board.cellMap[i + 1][j].numbersDomain.size()-1; k >= 0; k--) {
+                                        for (int k = board.cellMap[i + 1][j].numbersDomain.size() - 1; k >= 0; k--) {
                                             if (board.cellMap[i + 1][j].numbersDomain.get(k) <= board.cellMap[i][j].num) {
                                                 board.cellMap[i + 1][j].numbersDomain.remove(k);
                                             }
                                         }
-                                        if (board.cellMap[i+1][j].numbersDomain.size()==0){
+                                        if (board.cellMap[i + 1][j].numbersDomain.size() == 0) {
                                             System.out.println("this Problem Has No Solution..");
                                             return;
                                         }
 
 
                                     } else if (Colors.indexOf(board.cellMap[i + 1][j].color) >= Colors.indexOf(board.cellMap[i][j].color)) {
-                                        for (int k = board.cellMap[i + 1][j].numbersDomain.size()-1; k >= 0; k--) {
+                                        for (int k = board.cellMap[i + 1][j].numbersDomain.size() - 1; k >= 0; k--) {
                                             if (board.cellMap[i + 1][j].numbersDomain.get(k) > board.cellMap[i][j].num) {
                                                 board.cellMap[i + 1][j].numbersDomain.remove(k);
                                             }
                                         }
 
-                                        if (board.cellMap[i+1][j].numbersDomain.size()==0){
+                                        if (board.cellMap[i + 1][j].numbersDomain.size() == 0) {
                                             System.out.println("this Problem Has No Solution..");
                                             return;
                                         }
 
                                     }
-                                } else if (board.cellMap[i][j].num == 0 && board.cellMap[i+1][j].num!=0) {
+                                } else if (board.cellMap[i][j].num == 0 && board.cellMap[i + 1][j].num != 0) {
                                     if (Colors.indexOf(board.cellMap[i][j].color) <= Colors.indexOf(board.cellMap[i + 1][j].color)) {
                                         for (int k = board.cellMap[i][j].numbersDomain.size() - 1; k >= 0; k--) {
                                             if (board.cellMap[i][j].numbersDomain.get(k) < board.cellMap[i + 1][j].num) {
@@ -1054,7 +1060,7 @@ public class soduku {
                                             }
                                         }
 
-                                        if (board.cellMap[i][j].numbersDomain.size()==0){
+                                        if (board.cellMap[i][j].numbersDomain.size() == 0) {
                                             System.out.println("this Problem Has No Solution..");
                                             return;
                                         }
@@ -1067,7 +1073,7 @@ public class soduku {
                                             }
                                         }
 
-                                        if (board.cellMap[i][j].numbersDomain.size()==0){
+                                        if (board.cellMap[i][j].numbersDomain.size() == 0) {
                                             System.out.println("this Problem Has No Solution..");
                                             return;
                                         }
@@ -1077,49 +1083,49 @@ public class soduku {
                             }
 
                         } else if (board.cellMap[i + 1][j].color == '#') {
-                            int index= board.cellMap[i+1][j].colorsDomain.indexOf(board.cellMap[i][j].color);
-                            board.cellMap[i+1][j].colorsDomain.remove(index);
-                            if (board.cellMap[i+1][j].colorsDomain.size()==0){
+                            if (board.cellMap[i + 1][j].colorsDomain.contains(board.cellMap[i][j].color)){
+                               int index = board.cellMap[i + 1][j].colorsDomain.indexOf(board.cellMap[i][j].color);
+                                board.cellMap[i + 1][j].colorsDomain.remove(index);
+                            }
+                            if (board.cellMap[i + 1][j].colorsDomain.size() == 0) {
                                 System.out.println("this Problem Has No Solution..");
                                 return;
                             }
-                        }
 
 
+                            if (board.cellMap[i][j].num != 0) {
+                                if (board.cellMap[i + 1][j].num != 0) {
 
-                        if (board.cellMap[i][j].num != 0) {
-                            if (board.cellMap[i + 1][j].num != 0) {
-
-                                if (board.cellMap[i + 1][j].num < board.cellMap[i][j].num) {
-                                    for (int k = board.cellMap[i + 1][j].colorsDomain.size() - 1; k >= 0; k--) {
+                                    if (board.cellMap[i + 1][j].num < board.cellMap[i][j].num) {
+                                        for (int k = board.cellMap[i + 1][j].colorsDomain.size() - 1; k >= 0; k--) {
 //                                            System.out.println(Colors.indexOf(board.cellMap[i - 1][j].colorsDomain.get(k)) + " " + Colors.indexOf(board.cellMap[i][j].color));
-                                        if (Colors.indexOf(board.cellMap[i + 1][j].colorsDomain.get(k)) <= Colors.indexOf(board.cellMap[i][j].color)) {
-                                            board.cellMap[i + 1][j].colorsDomain.remove(k);
+                                            if (Colors.indexOf(board.cellMap[i + 1][j].colorsDomain.get(k)) <= Colors.indexOf(board.cellMap[i][j].color)) {
+                                                board.cellMap[i + 1][j].colorsDomain.remove(k);
+                                            }
                                         }
-                                    }
-                                    if (board.cellMap[i+1][j].colorsDomain.size()==0){
-                                        System.out.println("this Problem Has No Solution..");
-                                        return;
-                                    }
-
-
-
-                                } else if (board.cellMap[i + 1][j].num > board.cellMap[i][j].num) {
-                                    for (int k = board.cellMap[i + 1][j].colorsDomain.size() - 1; k >= 0; k--) {
-                                        if (Colors.indexOf(board.cellMap[i + 1][j].colorsDomain.get(k)) >= Colors.indexOf(board.cellMap[i][j].color)) {
-                                            board.cellMap[i + 1][j].colorsDomain.remove(k);
+                                        if (board.cellMap[i + 1][j].colorsDomain.size() == 0) {
+                                            System.out.println("this Problem Has No Solution..");
+                                            return;
                                         }
-                                    }
 
 
-                                    if (board.cellMap[i+1][j].colorsDomain.size()==0){
-                                        System.out.println("this Problem Has No Solution..");
-                                        return;
+                                    } else if (board.cellMap[i + 1][j].num > board.cellMap[i][j].num) {
+                                        for (int k = board.cellMap[i + 1][j].colorsDomain.size() - 1; k >= 0; k--) {
+                                            if (Colors.indexOf(board.cellMap[i + 1][j].colorsDomain.get(k)) >= Colors.indexOf(board.cellMap[i][j].color)) {
+                                                board.cellMap[i + 1][j].colorsDomain.remove(k);
+                                            }
+                                        }
+
+
+                                        if (board.cellMap[i + 1][j].colorsDomain.size() == 0) {
+                                            System.out.println("this Problem Has No Solution..");
+                                            return;
+                                        }
                                     }
                                 }
                             }
-                        }
 
+                        }
                     }
 
                     if (j-1>=0){
@@ -1193,8 +1199,11 @@ public class soduku {
                             }
 
                         } else if (board.cellMap[i][j-1].color == '#') {
-                            int index= board.cellMap[i][j-1].colorsDomain.indexOf(board.cellMap[i][j].color);
-                            board.cellMap[i][j-1].colorsDomain.remove(index);
+                            if (board.cellMap[i][j-1].colorsDomain.contains(board.cellMap[i][j].color)){
+                               int index= board.cellMap[i][j-1].colorsDomain.indexOf(board.cellMap[i][j].color);
+                               board.cellMap[i][j-1].colorsDomain.remove(index);
+
+                            }
 
                             if (board.cellMap[i][j-1].colorsDomain.size()==0){
                                 System.out.println("this Problem Has No Solution..");
@@ -1306,8 +1315,10 @@ public class soduku {
                             }
 
                         } else if (board.cellMap[i][j+1].color == '#') {
-                            int index= board.cellMap[i][j+1].colorsDomain.indexOf(board.cellMap[i][j].color);
-                            board.cellMap[i][j+1].colorsDomain.remove(index);
+                            if (board.cellMap[i][j+1].colorsDomain.contains(board.cellMap[i][j].color)){
+                               int index= board.cellMap[i][j+1].colorsDomain.indexOf(board.cellMap[i][j].color);
+                               board.cellMap[i][j+1].colorsDomain.remove(index);
+                            }
 
                             if (board.cellMap[i][j+1].colorsDomain.size()==0){
                                 System.out.println("this Problem Has No Solution..");
@@ -1355,24 +1366,120 @@ public class soduku {
         }
 
         board.printColorsDomain();
-        board.printNumbersDomains();
-
-
-        board.printBoard();
-
 
         for (int i = 0; i <board.size ; i++) {
             for (int j = 0; j <board.size ; j++) {
-                board.cellMap[i][j].combineDomain.clear();
-                board.cellMap[i][j].setCombineDomain();
+                if (board.cellMap[i][j].done == false) {
+
+
+                    board.cellMap[i][j].combineDomain.clear();
+                    int count = 0;
+                    for (int k = 0; k < board.cellMap[i][j].numbersDomain.size(); k++) {
+                        for (int l = 0; l < board.cellMap[i][j].colorsDomain.size(); l++) {
+                            String str = board.cellMap[i][j].numbersDomain.get(k) + "" + board.cellMap[i][j].colorsDomain.get(l);
+                            boolean flag=true;
+                            if (i - 1 >= 0) {
+                                if (board.cellMap[i - 1][j].num != 0 && board.cellMap[i - 1][j].color != '#') {
+                                    if (board.cellMap[i][j].numbersDomain.get(k) > board.cellMap[i - 1][j].num) {
+                                        if (Colors.indexOf(board.cellMap[i][j].colorsDomain.get(l)) > Colors.indexOf(board.cellMap[i - 1][j].color)) {
+                                            flag=false;
+                                        }
+                                    } else if (board.cellMap[i][j].numbersDomain.get(k) < board.cellMap[i - 1][j].num) {
+                                        if (Colors.indexOf(board.cellMap[i][j].colorsDomain.get(l)) < Colors.indexOf(board.cellMap[i - 1][j].color)) {
+                                         flag=false;
+                                        }
+                                    }
+                                }
+
+                            }
+
+                            if (i + 1 <board.size) {
+                                if (board.cellMap[i + 1][j].num != 0 && board.cellMap[i + 1][j].color != '#') {
+                                    if (board.cellMap[i][j].numbersDomain.get(k) > board.cellMap[i + 1][j].num) {
+                                        if (Colors.indexOf(board.cellMap[i][j].colorsDomain.get(l)) > Colors.indexOf(board.cellMap[i + 1][j].color)) {
+                                            flag=false;
+                                        }
+                                    } else if (board.cellMap[i][j].numbersDomain.get(k) < board.cellMap[i + 1][j].num) {
+                                        if (Colors.indexOf(board.cellMap[i][j].colorsDomain.get(l)) < Colors.indexOf(board.cellMap[i + 1][j].color)) {
+                                            flag=false;
+                                        }
+                                    }
+                                }
+
+                            }
+
+                            if (j-1 >=0) {
+                                if (board.cellMap[i][j-1].num != 0 && board.cellMap[i][j-1].color != '#') {
+                                    if (board.cellMap[i][j].numbersDomain.get(k) > board.cellMap[i][j-1].num) {
+                                        if (Colors.indexOf(board.cellMap[i][j].colorsDomain.get(l)) > Colors.indexOf(board.cellMap[i][j-1].color)) {
+                                            flag=false;
+                                        }
+                                    } else if (board.cellMap[i][j].numbersDomain.get(k) < board.cellMap[i][j-1].num) {
+                                        if (Colors.indexOf(board.cellMap[i][j].colorsDomain.get(l)) < Colors.indexOf(board.cellMap[i][j-1].color)) {
+                                            flag=false;
+                                        }
+                                    }
+                                }
+
+                            }
+
+                            if (j+1 <board.size) {
+                                if (board.cellMap[i][j+1].num != 0 && board.cellMap[i][j+1].color != '#') {
+                                    if (board.cellMap[i][j].numbersDomain.get(k) > board.cellMap[i][j+1].num) {
+                                        if (Colors.indexOf(board.cellMap[i][j].colorsDomain.get(l)) > Colors.indexOf(board.cellMap[i][j+1].color)) {
+
+                                            flag=false;
+                                        }
+                                    } else if (board.cellMap[i][j].numbersDomain.get(k) < board.cellMap[i][j+1].num) {
+                                        if (Colors.indexOf(board.cellMap[i][j].colorsDomain.get(l)) < Colors.indexOf(board.cellMap[i][j+1].color)) {
+
+                                            flag=false;
+                                        }
+                                    }
+                                }
+
+                            }
+
+//                            if (flag==false && i==0 && j==0){
+//                                System.out.println(str);
+//                            }
+
+                            if (flag==true){
+                                board.cellMap[i][j].combineDomain.add(str);
+                            }
+
+
+
+
+
+
+
+                        }
+                    }
+                }
             }
-
-
         }
 
-        System.out.println("------");
-
         board.printCombineDomain();
+
+//        board.printNumbersDomains();
+//
+//
+//        board.printBoard();
+
+
+//        for (int i = 0; i <board.size ; i++) {
+//            for (int j = 0; j <board.size ; j++) {
+//                board.cellMap[i][j].combineDomain.clear();
+//                board.cellMap[i][j].setCombineDomain();
+//            }
+//
+//
+//        }
+//
+//        System.out.println("------");
+//
+//        board.printCombineDomain();
         suduko.solve2(board);
 
 
