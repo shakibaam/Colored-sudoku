@@ -1,2 +1,2 @@
-Artificial intelligence project 2 ,
+# Artificial intelligence project 2 
 sudoku solver
